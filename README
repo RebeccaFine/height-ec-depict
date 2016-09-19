@@ -1,0 +1,18 @@
+This is the code used for DEPICT analysis of ExomeChip data.
+
+In the source/ folder, there are three pieces of code.
+
+To create null backgrounds for analysis:
+1. height_sort_nulls_and_order_genes.py: example config file in example/example_height_sort_nulls_and_order_genes.cfg.
+This takes in each EC permutation, sorts by variants by p-value, and assigns each to a gene. Outputs a ranked list of genes for each permutation, which is used as input for the next piece of code.
+2. height-EC-DEPICT_forNulls.py: example config file in example/example_height-EC-DEPICT_forNulls.cfg 
+Example output is in example/example.nullorderedgenes
+This takes in ranked gene list from script #1 and calculates the test statistic for each permutation for each gene set. The number of input genes used to calculate null test statistic (i.e. how many genes to take from the top of the list for each permutation) must be matched to the number of significant genes used in the actual data. Outputs a null test statistic for each gene set for each permutation, which is used as a background file in script #3.
+Example output is in example/example.nullteststatistic.
+
+For actual gene set enrichment (using null background created by script #1 and script #2):
+3. height-EC-DEPICT.py: Performs the gene set enrichment analysis. Example input file in example/example_height-EC-DEPICT_forNulls.cfg.
+
+
+Reconstituted gene sets can be found at:
+http://www.broadinstitute.org/mpg/depict/depict_download/reconstituted_genesets/GPL570-GPL96-GPL1261-GPL1355TermGeneZScores-MGI_MF_CC_RT_IW_BP_KEGG_z_z.txt.gz
